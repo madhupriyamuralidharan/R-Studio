@@ -1,0 +1,34 @@
+---
+title: An R Markdown document converted from "Importing_Data_in R_and_In-built_Functions1.ipynb"
+output: html_document
+---
+
+Reading data from a file
+
+```{r}
+#file = 'http://openmv.net/file/food-texture.csv'
+file = 'food-texture.csv'
+#the csv file should be in the same directory as the code file
+foodData = read.csv(file, header = TRUE, row.names = 1, stringsAsFactors = FALSE) 
+```
+
+In-built functions on the data frame that has been read
+
+```{r}
+# Get dimension
+dim(foodData)
+
+# Get number of rows and columns
+nrow(foodData)
+ncol(foodData)
+
+# Structure of the data frame
+str(foodData)
+
+# In-built functions that can applied to columns of a data frame
+mean(foodData$Density)
+mean(foodData[['Density']])
+apply(foodData, 2, mean)
+apply(foodData[c('Oil', 'Density')], 2 , mean)
+```
+
