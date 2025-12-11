@@ -1,0 +1,106 @@
+---
+title: "Control Flow in R"
+output: html_notebook
+---
+
+
+```{r}
+# Logical expressions-1: relational operators >,<,>=,<=,==
+x=5
+x>4
+```
+
+```{r}
+# Logical expressions-2: logical operators short form and long form
+l1 = c(TRUE, FALSE, FALSE, TRUE)
+l2 = c(TRUE, TRUE, FALSE, FALSE)
+
+# Logical AND
+l1 & l2
+
+# Logical OR
+l1 | l2 
+
+# Logical NOT
+!l1
+
+# Logical AND Long Forms doesn't work on vector
+#l1 && l2
+```
+
+```{r}
+# Logical expressions-3: value matching
+names = c('Ajith', 'Priya', 'Gabriel')
+'Ajit' %in% names
+'Priya' %in% names
+!('Gabriel' %in% names)
+```
+
+```{r}
+# Special functions  any(), all(), isTRUE(), isFALSE(), all.equal()
+all(l1)
+any(l1)
+x = c(1, 2, NA)
+x>0
+any(x>0)
+all(x>0)
+isTRUE(all(x>0))
+
+x= c(1:4)
+y= (x^1/2)^2
+x==y
+all.equal(x,y,0.5)
+
+```
+
+
+```{r}
+# If-statement nested if pos, neg, zero check
+x=5
+ if (x %% 2==0){
+  print('Even')
+} else{
+  print('Odd')
+}
+
+ifelse(x>0,'Positive','Negative')
+```
+
+
+```{r}
+# Vectorized if-statement
+x=c(1:10)
+print(x)
+ifelse(x %% 2==0,'Even','Odd')
+```
+
+```{r}
+# For-statement
+x = c(1:10)
+for (val in x){
+  y= x^2
+  print(y)
+}
+
+for (i in 1:length(x)){
+  y[i]= x[i]^2
+  print(y[i])
+}
+
+participants = c('Ajith', 'Priya', 'Gabriel')
+for (names in participants)
+  print(names)
+```
+
+```{r}
+# While-statement runif(1)-uniform random variable 
+x = 1
+ while (x > 0.3) {
+ x = runif(1)
+ print(x)
+ }
+```
+
+
+
+
