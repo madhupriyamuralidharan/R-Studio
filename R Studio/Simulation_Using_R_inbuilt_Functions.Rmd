@@ -1,0 +1,96 @@
+---
+title: "Simulation Using R In-built Functions"
+output: html_notebook
+---
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+# A fun exercise to simulate the rolling of a fair die
+# Sampling space for rolling a pair of fair dice
+s = c(1:6)
+# Corresponding probabilities
+p = (1/6) * replicate(6, 1)
+# The sampling process
+sample ( s, 1, replace = TRUE, prob = p)
+#sample ( s, 2, replace = TRUE, prob = p) 
+#second variable is no of times the die is rolled
+
+# The sampling process with simulations replicating more times
+nsimulations = 10
+simulatedData=replicate (nsimulations, sample ( s, 2, replace = TRUE, prob = p))
+str(simulatedData[,1])
+```
+
+```{r}
+nsimulations = 1e5
+simulatedData=replicate (nsimulations, sample ( s, 2, replace = TRUE, prob = p))
+# Function to check if the sum of the rolls is at least 7
+
+checkEvent= function(data){
+  if (sum(data) >=7 ){
+    return(1)
+  } else{
+    return(0)
+  }
+}
+
+# Probability that the sum of the rolls is at least 7
+#print(simulatedData)
+#apply(simulatedData,2, checkEvent)
+mean(apply(simulatedData,2, checkEvent))
+#since its column by column we set 2 else if you want row by row its 1
+
+# Function to check if the first roll is even
+checkRollEven = function(data){
+  if(data[1] %%2 ==0){
+    return (1)
+  } else {
+    return (0)
+  }
+}
+# Probability that the first roll is even
+mean(apply(simulatedData,2, checkRollEven))
+```
+
+```{r}
+# Simulating a discrete random variable (n=10, p=.6) drawing a black ball
+n = 10
+p = 0.6
+nsimulations = 1e05
+simulatedData = rbinom(nsimulations,n,p)
+df=as.data.frame(table(simulatedData))
+colnames(df)= c('Value','Frequency')
+#head(df)
+p=ggplot(data=df)+geom_col(aes(x= Value, y=Frequency), width=0.7, fill ='steelblue')+ggtitle('Simulating a binomial random variable')+ theme_minimal()+ labs(x='Values', y='Frequency')
+p
+```
+
+```{r}
+# Poisson Random Variable, customers showing up a shop
+rpois(100, lambda=10)
+```
+
+```{r}
+# Simulating a continuous random variable - heights of students
+mu = 170
+sigma = 8
+nsimulations = 100
+heightData=rnorm(nsimulations, mean = mu, sd = sigma)
+df=as.data.frame(heightData)
+colnames(df) ='Height'
+#head(df)
+#mean((df['Height'] >=170) & (df['Height']<=171))
+delta=2
+p1 = ggplot(df) +
+ geom_histogram(aes(x=Height, y = ..count../sum(..count..)), breaks = seq(mu-4*sigma, mu+4*sigma,
+by=delta), color = 'black', fill= 'steelblue', alpha = 0.4) +
+ labs (x='Height', y= 'Count' )
+p1
+```
+
+
+
